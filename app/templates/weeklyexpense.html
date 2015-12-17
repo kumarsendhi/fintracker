@@ -1,0 +1,28 @@
+
+		<table class="table table-striped">
+			<thead>
+				<th>
+					Date
+					</th>
+					<th>
+						Expense Category
+						</th>
+						<th>
+							Amount
+						</th>
+			</thead>
+			<tbody>
+				<tr ng-repeat="expense in expenses">
+					<td>
+						{{expense.Date}}
+					</td>
+					<td>
+						{{expense.ExpenseCategory}}
+					</td>
+					<td>
+						{{expense.SpentAmount}}
+					</td>
+					</tr>
+			</tbody>
+		</table>
+

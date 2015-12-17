@@ -1,0 +1,27 @@
+
+<div class="row-fluid">  
+  <div  ng-include="'./templates/messages.html'"></div>
+ <form class="form-inline" role="form">
+  <div class="form-group ">
+    <label for="ExpenditureCategory">Expenditure Category:</label>
+    <input type="text" class="form-control" id="ExpenditureCategory" ng-model="expCat">
+  </div>
+  <button type="button" class="btn btn-default" ng-click="saveExpenditureCategory()">Submit</button>
+  <div class="row">
+  <table class="table table-striped">
+    <thead>
+      <th>Expenditures</th>
+      </thead>
+      <tbody>
+        <tr ng-repeat="expenditure in expenditures">
+          <td>
+            {{expenditure.expenditureCategory}}
+            </td>
+        </tr>
+        </tbody>  
+  </table>
+  </div>
+  
+</form>
+   </span>
+</div>

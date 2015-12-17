@@ -1,0 +1,17 @@
+<div class="container">
+	<div class="alert alert-success" ng-show="message.status =='success'">
+		<strong>Success!</strong> {{message.details}}
+	</div>
+
+	<div class="alert alert-info" ng-show="message.status =='info'">
+		<strong>Info!</strong> {{message.details}}
+	</div>
+
+	<div class="alert alert-warning" ng-show="message.status =='warning'">
+		<strong>Warning!</strong> {{message.details}}
+	</div>
+
+	<div class="alert alert-danger" ng-show="message.status =='danger'">
+		<strong>Danger!</strong> {{message.details}}
+	</div>
+</div>

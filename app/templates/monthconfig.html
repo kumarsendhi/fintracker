@@ -1,0 +1,27 @@
+
+<div class="row-fluid">  
+  <div  ng-include="'./templates/messages.html'"></div>
+ <form class="form-inline" role="form">
+  <div class="form-group ">
+    <label for="Month">Month:</label>
+    <input type="text" class="form-control" id="Month" ng-model="Month">
+  </div>
+  <button type="button" class="btn btn-default" ng-click="saveMonth()">Submit</button>
+  <div class="row">
+  <table class="table table-striped">
+    <thead>
+      <th>Months</th>
+      </thead>
+      <tbody>
+        <tr ng-repeat="month in months">
+          <td>
+            {{month.month}}
+            </td>
+        </tr>
+        </tbody>  
+  </table>
+  </div>
+  
+</form>
+   </span>
+</div>

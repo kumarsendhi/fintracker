@@ -1,0 +1,27 @@
+
+<div class="row-fluid">  
+  <div  ng-include="'./templates/messages.html'"></div>
+ <form class="form-inline" role="form">
+  <div class="form-group ">
+    <label for="WeekNo">Week No:</label>
+    <input type="text" class="form-control" id="WeekNo" ng-model="weekNo">
+  </div>
+  <button type="button" class="btn btn-default" ng-click="saveWeekNo()">Submit</button>
+  <div class="row">
+  <table class="table table-striped">
+    <thead>
+      <th>Weeks</th>
+      </thead>
+      <tbody>
+        <tr ng-repeat="week in weeks">
+          <td>
+            {{week.week}}
+            </td>
+        </tr>
+        </tbody>  
+  </table>
+  </div>
+  
+</form>
+   </span>
+</div>
