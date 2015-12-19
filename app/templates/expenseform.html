@@ -3,7 +3,7 @@
  <form class="form-inline" role="form">
   <div class="form-group ">
     <label for="SelectYear">Select Year:</label>
-    <input type="text" class="form-control" id="SelectYear" ng-model="year" ng-change="getMonth()">
+    <input type="text" class="form-control" id="SelectYear" ng-model="Detail.year" ng-change="getMonth()">
   </div>
   <button type="button" class="btn btn-default" ng-click="generateExpenseForm()">ExpenseForm</button>
   <div class="row">
@@ -18,13 +18,24 @@
       </thead>
       <tbody>
          <tr>
-					<td>{{year}}</td>
-					<td><select ng-model="months" ng-options="m.month for m in monthsfromdb" ng-change="getWeek()"><option value="">(blank)</option></select></td>
-					<td><select ng-model="weeks" ng-options="w.week for w in weekfromdb" ng-change="getExpenditure()"><option value="">(blank)</option></select></td>
-          <td><select ng-model="expenditures" ng-options="e.expenditureCategory for e in expendituresfromdb"><option value="">(blank)</option></select></td>
-					<td><input class ="form-control" ng-model=""></td>
-					<td><input class ="form-control" ng-model=""></td>
+					<td>{{Detail.year}}</td>
+					<td><select ng-model="Detail.month" ng-options="m for m in monthsfromdb" ng-change="getWeek()"><option value="">(blank)</option></select></td>
+					<td><select ng-model="Detail.week" ng-options="w for w in weekfromdb" ng-change="getExpenditure()"><option value="">(blank)</option></select></td>
+          <td><select ng-model="Detail.expenditures" ng-options="e.expenditureCategory for e in expendituresfromdb"><option value="">(blank)</option></select></td>
+					<td><input class ="form-control" ng-model="Detail.date" jqdatepicker></td>
+					<td><input class ="form-control" ng-model="Detail.Amount"></td>
+          <td><button class="btn btn-primary" ng-click="addDetails()">Add Details</button></td>
+					<td><button class="btn btn-info" ng-click="update()">Update</button></td>
+					<td><button class="btn btn-info" ng-click="deselect()">Clear</button></td>
 					</tr>
+          <tr ng-repeat="detail in Details">
+            <td>{{detail.year}}</td>
+            <td>{{detail.month}}</td>
+            <td>{{detail.week}}</td>
+            <td>{{detail.expenditures}}</td>
+            <td>{{detail.date}}</td>
+            <td>{{detail.Amount}}</td>
+          </tr>
       </tbody>  
   </table>
   </div>

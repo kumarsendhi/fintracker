@@ -6,6 +6,7 @@ var bodyParser = require('body-parser')
 var expenditure = require('./app/models/expenditures')
 var week = require('./app/models/weeks')
 var months = require('./app/models/months')
+var details = require('./app/models/details')
 var jsonParser = bodyParser.json()
 
 
@@ -18,6 +19,7 @@ fs.readdirSync(__dirname+'/app/models').forEach(function(filename){
 	}
 })
 */
+
 
 
 nodeapp.use('/', express.static(__dirname + '/app'));
@@ -97,7 +99,7 @@ nodeapp.get('/MonthConfig',function(req,res){
 });
 
 
-nodeapp.get('/:arg', function(req,res){
+nodeapp.get('/ExpenseDetails:arg', function(req,res){
 	if(req.params.arg=="month"){
 		months.find({},function(err,docs){
 		if(err){console.log("Error getting Expenditure Category")}
@@ -121,6 +123,32 @@ nodeapp.get('/:arg', function(req,res){
 	}
 	
 });
+
+nodeapp.post('/ExpenseDetails', jsonParser,function(req,res){
+	console.log(req.body);
+	var det = new details(req.body);
+	det.save(function(err,docs){
+		if(err){
+			console.log(err);
+		}
+		else{
+			res.json(docs);
+		}
+	})
+	
+});
+
+nodeapp.get('/ExpenseDetails',function(req,res){
+
+	details.find({},function(err,docs){
+		if(err){console.log("Error getting Expenditure Category")}
+		console.log("Result:" +docs);
+		res.json(docs);
+	})
+
+	console.log("Hello")
+});
+
 
 
 

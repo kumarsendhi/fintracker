@@ -1,57 +1,42 @@
 
-	"use strict";
+"use strict";
 
 var app = angular.module("fintrackerApp");
 
-app.controller('incomeController',function($scope,$http,$cookies,messages){
+app.controller('incomeController', function ($scope, $http, $cookies, messages) {
 	console.log("successfully inside income controller");
-	if($cookies.get('Months')==null){
-		$scope.months= [];
-	}else{
-		$scope.months= $cookies.get('Months');
-	}
-	
-	if($cookies.get('Weeks')==null){
-		$scope.weeks= [];
-	}else{
-		$scope.weeks= $cookies.get('Weeks');
-	}
-	
-	if($cookies.get('Expenditures')==null){
-		$scope.expenditures= [];
-	}else{
-		$scope.expenditures= $cookies.get('Expenditures');
-	}
-	
-	$scope.args="";
+
+	$scope.months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+	$scope.weeks = ['week 1', 'week 2', 'week 3', 'week 4', 'week 5'];
+
+
+	$scope.args = "";
 	$scope.message;
-	
-	$scope.generateExpenseForm = function(){
-		
-	}
-	
+	$scope.Details =[];
+
+
 	$scope.getMonth = function () {
-		if ($scope.months.length <= 0) {
-			$scope.args = "month";
-			$http.get('/' + $scope.args).then(function (docs) {
-				$scope.monthsfromdb = docs.data;
-				$scope.month = "(blank)";
-				$scope.message = {
-					status: messages.info,
-					details: "info"
-				}
-			}, function (err) {
-				console.log(err);
-			});
-		}
+		$scope.monthsfromdb = $scope.months;
+		$scope.month = "(blank)";
 	}
-	
+
 	$scope.getWeek = function () {
-		if ($scope.weeks.length <= 0) {
-			$scope.args = "week";
-			$http.get('/' + $scope.args).then(function (docs) {
-				$scope.weekfromdb = docs.data;
-				$scope.week = "(blank)";
+		$scope.weekfromdb = $scope.weeks;
+		$scope.week = "(blank)";
+	}
+
+	$scope.getExpenditure = function () {
+		if ($cookies.get('Expenditures') == null) {
+			$scope.expenditures = [];
+		} else {
+			$scope.expenditures = JSON.parse($cookies.get('Expenditures'));
+		}
+		if ($scope.expenditures.length <= 0) {
+			$scope.args = "expenditure";
+			$http.get('/ExpenseDetails' + $scope.args).then(function (docs) {
+				$scope.expendituresfromdb = docs.data;
+				$cookies.put('Expenditures', JSON.stringify($scope.expendituresfromdb));
+				$scope.expenditure = "(blank)";
 				$scope.message = {
 					status: messages.info,
 					details: "info"
@@ -60,27 +45,49 @@ app.controller('incomeController',function($scope,$http,$cookies,messages){
 				console.log(err);
 			});
 		}
-	}
-	
-	$scope.getExpenditure = function(){
-		if($scope.expenditures.length <=0){
-			$scope.args = "expenditure";
-			$http.get('/'+$scope.args).then(function(docs){
-				$scope.expendituresfromdb = docs.data;
-				$scope.expenditure ="(blank)";
-				$scope.message ={
-					status: messages.info,
-					details: "info"
-				}
-			},function(err){
-				console.log(err);
-			});
+		else {
+			$scope.expendituresfromdb = $scope.expenditures;
+			$scope.expenditure = "(blank)";
 		}
 	}
-		
-		
-		
-		
-	});
+
+	$scope.addDetails = function () {
+		console.log($scope.Detail);
+		$http.post('/ExpenseDetails', $scope.Detail).then(function (docs) {
+			console.log(docs);
+			refresh();
+			$scope.Detail="";
+			$scope.message = {
+				status: messages.success,
+				details: "success"
+			}
+		}, function (err) {
+			console.log(err)
+		});
+	}
+	
+	function refresh(){
+		$http.get('/ExpenseDetails').then(function(docs){
+			console.log(docs);
+			$scope.Details =docs.data;
+		},function(err){
+			console.log(err);
+		});
+	}
+	
+	refresh();
+
+});
+
+
+app.directive('jqdatepicker', function () {
+    return {
+        restrict: 'A',
+        require: 'ngModel',
+		link: function (scope, element, attrs, incomeController) {
+            element.datepicker();
+        }
+    };
+});
 
 

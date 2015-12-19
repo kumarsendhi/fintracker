@@ -6,7 +6,7 @@ var app = angular.module("fintrackerApp",['ngRoute','ngCookies']);
 
 app.config(function($routeProvider){
   $routeProvider
-  .when('/',{
+  .when('/ExpenseDetails',{
     templateUrl: 'templates/expenseform.html',
         controller: 'incomeController'
   })
@@ -23,7 +23,7 @@ app.config(function($routeProvider){
         controller: 'monthConfigController'
   })
   .otherwise({
-    redirectTo:'/'
+    redirectTo:'/ExpenseDetails'
   });
 });
 
