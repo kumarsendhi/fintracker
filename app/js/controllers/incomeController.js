@@ -3,7 +3,7 @@
 
 var app = angular.module("fintrackerApp");
 
-app.controller('incomeController',function($scope,$http,$cookies){
+app.controller('incomeController',function($scope,$http,$cookies,messages){
 	console.log("successfully inside income controller");
 	if($cookies.get('Months')==null){
 		$scope.months= [];
@@ -15,6 +15,12 @@ app.controller('incomeController',function($scope,$http,$cookies){
 		$scope.weeks= [];
 	}else{
 		$scope.weeks= $cookies.get('Weeks');
+	}
+	
+	if($cookies.get('Expenditures')==null){
+		$scope.expenditures= [];
+	}else{
+		$scope.expenditures= $cookies.get('Expenditures');
 	}
 	
 	$scope.args="";
@@ -51,6 +57,22 @@ app.controller('incomeController',function($scope,$http,$cookies){
 					details: "info"
 				}
 			}, function (err) {
+				console.log(err);
+			});
+		}
+	}
+	
+	$scope.getExpenditure = function(){
+		if($scope.expenditures.length <=0){
+			$scope.args = "expenditure";
+			$http.get('/'+$scope.args).then(function(docs){
+				$scope.expendituresfromdb = docs.data;
+				$scope.expenditure ="(blank)";
+				$scope.message ={
+					status: messages.info,
+					details: "info"
+				}
+			},function(err){
 				console.log(err);
 			});
 		}
