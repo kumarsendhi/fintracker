@@ -19,8 +19,8 @@
       <tbody>
          <tr>
 					<td>{{year}}</td>
-					<td><select ng-model="template" ng-options="t.name for t in templates"><option value="">(blank)</option></select></td>
-					<td><select ng-model="months" ng-options="t.name for t in templates"><option value="">(blank)</option></select></td>
+					<td><select ng-model="months" ng-options="m.month for m in monthsfromdb" ng-change="getWeek()"><option value="">(blank)</option></select></td>
+					<td><select ng-model="weeks" ng-options="w.week for w in weekfromdb"><option value="">(blank)</option></select></td>
           <td><select ng-model="template" ng-options="t.name for t in templates"><option value="">(blank)</option></select></td>
 					<td><input class ="form-control" ng-model=""></td>
 					<td><input class ="form-control" ng-model=""></td>

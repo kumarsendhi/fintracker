@@ -2,7 +2,7 @@
 
   "use strict";
 
-var app = angular.module("fintrackerApp",['ngRoute']);
+var app = angular.module("fintrackerApp",['ngRoute','ngCookies']);
 
 app.config(function($routeProvider){
   $routeProvider

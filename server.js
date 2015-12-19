@@ -97,5 +97,23 @@ nodeapp.get('/MonthConfig',function(req,res){
 });
 
 
+nodeapp.get('/:arg', function(req,res){
+	if(req.param('arg')=="month"){
+		months.find({},function(err,docs){
+		if(err){console.log("Error getting Expenditure Category")}
+		console.log("Result:" +docs);
+		res.json(docs);
+	})
+	}
+	else if(req.param('arg')=="week"){
+		week.find({},function(err,docs){
+		if(err){console.log("Error getting Expenditure Category")}
+		console.log("Result:" +docs);
+		res.json(docs);
+	})
+	}
+	
+});
+
 
 nodeapp.listen(3000);
