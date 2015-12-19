@@ -69,13 +69,44 @@ app.controller('incomeController', function ($scope, $http, $cookies, messages) 
 	function refresh(){
 		$http.get('/ExpenseDetails').then(function(docs){
 			console.log(docs);
+		
+			for (var i=0;i<docs.data.length;i++) {
+				(function(i){
+					console.log(docs.data[i].expenditures);
+				$http.get('/ExpenseDetails/'+docs.data[i].expenditures+'/expenditure').then(function(expdocs){
+					console.log(expdocs.data.expenditureCategory);
+					docs.data[i].expenditures = expdocs.data.expenditureCategory;
+				})
+				})(i);
+				
+			}
+			
 			$scope.Details =docs.data;
+			
 		},function(err){
 			console.log(err);
 		});
 	}
 	
 	refresh();
+	
+	
+	$scope.remove=function(id){
+		console.log(id);
+		$http.delete('/ExpenseDetails/'+id).success(function(response){
+		 refresh();
+	 });
+	}
+	
+	$scope.edit=function(id){
+		console.log(id);
+		$http.get('/ExpenseDetails/'+id+'/details').success(function(response){
+		$scope.getMonth();
+		$scope.getWeek();	
+		$scope.getExpenditure();
+		$scope.Detail =response;
+	});
+	}
 
 });
 

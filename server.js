@@ -145,9 +145,42 @@ nodeapp.get('/ExpenseDetails',function(req,res){
 		console.log("Result:" +docs);
 		res.json(docs);
 	})
-
-	console.log("Hello")
 });
+
+nodeapp.get('/ExpenseDetails/:id/:collection',function(req,res){
+	console.log(req.params.id);
+	if(req.params.collection =="expenditure"){
+		expenditure.findOne({_id:req.params.id},function(err,docs){
+		if(err){console.log("Error getting Expenditure Category")}
+		console.log(docs);
+		res.json(docs);
+	})
+	}
+	else if(req.params.collection =="details"){
+		details.findOne({_id:req.params.id},function(err,docs){
+		if(err){console.log("Error getting Expenditure Category")}
+		console.log(docs);
+		res.json(docs);
+	})
+	}
+	
+	
+});
+
+nodeapp.delete('/ExpenseDetails/:id',function(req,res){
+	var id = req.params.id;
+	console.log(id);
+	details.remove({ _id: req.params.id }, function (err,docs) {
+		if(err){console.log("Error removing Details")}
+		console.log(docs);
+		res.json(docs);
+	});
+	
+
+	
+
+	
+})
 
 
 

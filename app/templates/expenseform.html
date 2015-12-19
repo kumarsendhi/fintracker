@@ -35,6 +35,8 @@
             <td>{{detail.expenditures}}</td>
             <td>{{detail.date}}</td>
             <td>{{detail.Amount}}</td>
+            <td><button class="btn btn-danger" ng-click="remove(detail._id)">Remove</button></td>
+				<td><button class="btn btn-warning" ng-click="edit(detail._id)">Edit</button></td>
           </tr>
       </tbody>  
   </table>
