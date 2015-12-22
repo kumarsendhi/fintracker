@@ -11,7 +11,8 @@ var jsonParser = bodyParser.json()
 
 
 //mongoose.connect('mongodb://localhost:27017/moneyTracker');
-mongoose.connect('mongodb://MyMongo:2nvX_I5j.TI2zgIloVW7o3sv0vEWWINO6KhPPpqxPs8-@ds034198.mongolab.com:34198/MyMongo');
+//mongoose.connect('mongodb://MyMongo:2nvX_I5j.TI2zgIloVW7o3sv0vEWWINO6KhPPpqxPs8-@ds034198.mongolab.com:34198/MyMongo');
+mongoose.connect(process.env.DB_URL ||'mongodb://localhost:27017/moneyTracker');
 
 /** 
 fs.readdirSync(__dirname+'/app/models').forEach(function(filename){
@@ -231,7 +232,10 @@ nodeapp.put('/ExpenseDetails/:id',jsonParser,function(req,res){
 	
 })
 
+var host = process.env.URL || 'http://localhost';
+var port = process.env.PORT || 8000;
 
 
-
-nodeapp.listen(3000);
+var server = nodeapp.listen(port, function () {
+  console.log('Example app listening at http://%s:%s', host, port);
+});
