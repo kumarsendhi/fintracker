@@ -31,11 +31,12 @@ app.controller('expenditureCategoryController',function($scope,$http,messages){
 			  status: messages.success,
 			  details:"success"
 		  }
+		  refresh();
 	},function(err){
 		console.log(err)
 		});
 		$scope.expCat = "";
-		refresh();
+		
 	}
 
 });

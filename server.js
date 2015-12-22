@@ -10,7 +10,8 @@ var details = require('./app/models/details')
 var jsonParser = bodyParser.json()
 
 
-mongoose.connect('mongodb://localhost:27017/moneyTracker');
+//mongoose.connect('mongodb://localhost:27017/moneyTracker');
+mongoose.connect('mongodb://MyMongo:2nvX_I5j.TI2zgIloVW7o3sv0vEWWINO6KhPPpqxPs8-@ds034198.mongolab.com:34198/MyMongo');
 
 /** 
 fs.readdirSync(__dirname+'/app/models').forEach(function(filename){
