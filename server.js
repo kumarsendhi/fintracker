@@ -139,8 +139,14 @@ nodeapp.post('/ExpenseDetails', jsonParser,function(req,res){
 });
 
 nodeapp.get('/ExpenseDetails',function(req,res){
-
+/**
 	details.find({},function(err,docs){
+		if(err){console.log("Error getting Expenditure Category")}
+		console.log("Result:" +docs);
+		res.json(docs);
+	})
+	**/
+	details.find({}).populate('expenditures').exec(function(err,docs){
 		if(err){console.log("Error getting Expenditure Category")}
 		console.log("Result:" +docs);
 		res.json(docs);
@@ -157,11 +163,11 @@ nodeapp.get('/ExpenseDetails/:id/:collection',function(req,res){
 	})
 	}
 	else if(req.params.collection =="details"){
-		details.findOne({_id:req.params.id},function(err,docs){
-		if(err){console.log("Error getting Expenditure Category")}
-		console.log(docs);
+		details.findOne({_id:req.params.id}).populate('expenditures').exec(function(err,docs){
+			if(err){console.log("Error getting Expenditure Category")}
+		console.log("Result:" +docs);
 		res.json(docs);
-	})
+		})
 	}
 	
 	

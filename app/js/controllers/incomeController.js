@@ -69,7 +69,7 @@ app.controller('incomeController', function ($scope, $http, $cookies, messages) 
 	function refresh(){
 		$http.get('/ExpenseDetails').then(function(docs){
 			console.log(docs);
-		
+		/**
 			for (var i=0;i<docs.data.length;i++) {
 				(function(i){
 					console.log(docs.data[i].expenditures);
@@ -80,6 +80,7 @@ app.controller('incomeController', function ($scope, $http, $cookies, messages) 
 				})(i);
 				
 			}
+			**/
 			
 			$scope.Details =docs.data;
 			
@@ -104,7 +105,12 @@ app.controller('incomeController', function ($scope, $http, $cookies, messages) 
 		$scope.getMonth();
 		$scope.getWeek();	
 		$scope.getExpenditure();
+		
 		$scope.Detail =response;
+		$scope.Detail.expenditures = response.expenditures.expenditureCategory;
+		//$scope.expenditure = $scope.expendituresfromdb[0].expenditureCategory;
+		console.log($scope.Detail);
+		
 	});
 	}
 
