@@ -146,7 +146,8 @@ nodeapp.get('/ExpenseDetails',function(req,res){
 		res.json(docs);
 	})
 	**/
-	details.find({}).populate('expenditures').exec(function(err,docs){
+	//details.find({}).populate('expenditures').exec(function(err,docs){
+		details.find({}).exec(function(err,docs){
 		if(err){console.log("Error getting Expenditure Category")}
 		console.log("Result:" +docs);
 		res.json(docs);
@@ -163,7 +164,8 @@ nodeapp.get('/ExpenseDetails/:id/:collection',function(req,res){
 	})
 	}
 	else if(req.params.collection =="details"){
-		details.findOne({_id:req.params.id}).populate('expenditures').exec(function(err,docs){
+		//details.findOne({_id:req.params.id}).populate('expenditures').exec(function(err,docs){
+			details.findOne({_id:req.params.id}).exec(function(err,docs){
 			if(err){console.log("Error getting Expenditure Category")}
 		console.log("Result:" +docs);
 		res.json(docs);
@@ -185,6 +187,46 @@ nodeapp.delete('/ExpenseDetails/:id',function(req,res){
 
 	
 
+	
+})
+
+nodeapp.put('/ExpenseDetails/:id',jsonParser,function(req,res){
+	/**
+	var id = req.params.id;
+	console.log(req.body.name);
+	db.contactlist.findAndModify({
+		query:{_id:mongojs.ObjectId(id)},
+		update:{$set:{name:req.body.name,email:req.body.email,number:req.body.number}},
+		new:true},function(err,doc){
+			res.json(doc);
+		}
+	)
+	**/
+	var id = req.params.id;
+	console.log(req.body);
+	details.findById(req.params.id,function(err,doc){
+		if(err){
+			console.log("Error getting document");
+			return;
+		}
+		console.log("found for update"+ doc);
+		doc.year = req.body.year;
+		doc.month =req.body.month;
+		doc.week = req.body.week;
+		doc.expenditures = req.body.expenditures;
+		doc.date = req.body.date;
+		doc.Amount = req.body.Amount;
+		doc.save(function(err,docs){
+		if(err){
+			console.log(err);
+		}
+		else{
+			res.json(docs);
+		}
+	})
+			
+		
+	})
 	
 })
 

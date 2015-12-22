@@ -83,6 +83,7 @@ app.controller('incomeController', function ($scope, $http, $cookies, messages) 
 			**/
 			
 			$scope.Details =docs.data;
+			$scope.Detail ="";
 			
 		},function(err){
 			console.log(err);
@@ -107,12 +108,24 @@ app.controller('incomeController', function ($scope, $http, $cookies, messages) 
 		$scope.getExpenditure();
 		
 		$scope.Detail =response;
-		$scope.Detail.expenditures = response.expenditures.expenditureCategory;
+		$scope.Detail.expenditures = response.expenditures;
+		//$scope.Detail.expenditures = response.expenditures.expenditureCategory;
 		//$scope.expenditure = $scope.expendituresfromdb[0].expenditureCategory;
 		console.log($scope.Detail);
 		
 	});
 	}
+	
+	$scope.update = function(){
+	console.log($scope.Detail._id);
+	$http.put('/ExpenseDetails/'+$scope.Detail._id,$scope.Detail).success(function(response){
+		refresh();
+	});
+ };
+ 
+ $scope.deselect=function(){
+	 $scope.Detail ="";
+ };
 
 });
 

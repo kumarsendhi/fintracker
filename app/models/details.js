@@ -6,7 +6,8 @@ var  detailsSchema =new Schema({
 	year:Number,
 	month:String,
 	week:String,
-	expenditures:{type: Schema.ObjectId, ref: 'Expenditures'},
+	//expenditures:{type: Schema.ObjectId, ref: 'Expenditures'},
+	expenditures:String,
 	date:Date,
 	Amount:Number	
 });
