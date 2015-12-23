@@ -14,8 +14,8 @@ console.log("host:"+process.env.URL || 'http://localhost');
 console.log("port:"+process.env.PORT || 8000);
 
 //mongoose.connect('mongodb://localhost:27017/moneyTracker');
-//mongoose.connect('mongodb://MyMongo:2nvX_I5j.TI2zgIloVW7o3sv0vEWWINO6KhPPpqxPs8-@ds034198.mongolab.com:34198/MyMongo');
-mongoose.connect(process.env.CUSTOM_DBURL ||'mongodb://localhost:27017/moneyTracker');
+mongoose.connect('mongodb://MyMongo:2nvX_I5j.TI2zgIloVW7o3sv0vEWWINO6KhPPpqxPs8-@ds034198.mongolab.com:34198/MyMongo');
+//mongoose.connect(process.env.CUSTOM_DBURL ||'mongodb://localhost:27017/moneyTracker');
 
 /** 
 fs.readdirSync(__dirname+'/app/models').forEach(function(filename){
@@ -183,6 +183,9 @@ nodeapp.get('/ExpenseDetails/:id/:collection',function(req,res){
 nodeapp.delete('/ExpenseDetails/:id',function(req,res){
 	var id = req.params.id;
 	console.log(id);
+	console.log("mongo:"+process.env.CUSTOM_DBURL ||'mongodb://localhost:27017/moneyTracker');
+console.log("host:"+process.env.URL || 'http://localhost');
+console.log("port:"+process.env.PORT || 8000);
 	details.remove({ _id: req.params.id }, function (err,docs) {
 		if(err){console.log("Error removing Details")}
 		console.log(docs);
