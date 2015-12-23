@@ -12,7 +12,7 @@ var jsonParser = bodyParser.json()
 
 //mongoose.connect('mongodb://localhost:27017/moneyTracker');
 //mongoose.connect('mongodb://MyMongo:2nvX_I5j.TI2zgIloVW7o3sv0vEWWINO6KhPPpqxPs8-@ds034198.mongolab.com:34198/MyMongo');
-mongoose.connect(process.env.CUSTOM_DB_URL ||'mongodb://localhost:27017/moneyTracker');
+mongoose.connect(process.env.CUSTOM_DBURL ||'mongodb://localhost:27017/moneyTracker');
 
 /** 
 fs.readdirSync(__dirname+'/app/models').forEach(function(filename){
