@@ -65,6 +65,9 @@ app.controller('incomeController', function ($scope, $http, $cookies, messages) 
 			$scope.OriginalData =docs.data;
 			$scope.filterData =docs.data;
 			$scope.Details =docs.data;
+			var i = $scope.Detail.year;
+			nullDetails();
+			$scope.Detail.year = i;
 			SpendingAmount();			
 		},function(err){
 			console.log(err);
