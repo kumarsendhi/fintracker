@@ -9,7 +9,8 @@ var  detailsSchema =new Schema({
 	//expenditures:{type: Schema.ObjectId, ref: 'Expenditures'},
 	expenditures:String,
 	date:Date,
-	Amount:Number	
+	Amount:Number,
+	expenseComment:String	
 });
 
 var Details = mongoose.model('Details',detailsSchema);

@@ -231,6 +231,7 @@ nodeapp.put('/ExpenseDetails/:id',jsonParser,function(req,res){
 		doc.expenditures = req.body.expenditures;
 		doc.date = req.body.date;
 		doc.Amount = req.body.Amount;
+		doc.expenseComment=req.body.expenseComment;
 		doc.save(function(err,docs){
 		if(err){
 			console.log(err);

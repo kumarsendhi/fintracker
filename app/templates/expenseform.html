@@ -15,6 +15,7 @@
 	  <th>Expense Category</th>
 	  <th>Date</th>
 	  <th>Amount Spent</th>
+    <th>Comment</th>
       </thead>
       <tbody>
          <tr>
@@ -24,6 +25,7 @@
           <td><select ng-model="Detail.expenditures" ng-change="monitorChange()" ng-options="e.expenditureCategory as e.expenditureCategory for e in expendituresfromdb"><option value="">(blank)</option></select></td>
 					<td><input class ="form-control"  ng-model="Detail.date" jqdatepicker></td>
 					<td><input class ="form-control" ng-model="Detail.Amount"></td>
+          <td><textarea class ="form-control" ng-model="Detail.expenseComment"></textarea></td>
           <td><button class="btn btn-primary" ng-click="addDetails()">Add Details</button></td>
 					<td><button class="btn btn-info" ng-click="update()">Update</button></td>
 					<td><button class="btn btn-info" ng-click="deselect()">Clear</button></td>
@@ -35,6 +37,7 @@
             <td>{{detail.expenditures}}</td>
             <td>{{detail.date}}</td>
             <td>{{detail.Amount}}</td>
+            <td>{{detail.expenseComment}}</td>
             <td><button class="btn btn-danger" ng-click="remove(detail._id)">Remove</button></td>
 				<td><button class="btn btn-warning" ng-click="edit(detail._id)">Edit</button></td>
           </tr>

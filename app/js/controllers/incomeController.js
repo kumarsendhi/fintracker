@@ -24,6 +24,7 @@ app.controller('incomeController', function ($scope, $http, $cookies, messages) 
 		$scope.Detail.expenditures ="";
 		$scope.Detail.date="";
 		$scope.Detail.Amount="";
+		$scope.Detail.expenseComment="";
 	}
 	
 	var SpendingAmount=function(){
