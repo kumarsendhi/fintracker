@@ -124,6 +124,13 @@ nodeapp.get('/ExpenseDetails:arg', function(req,res){
 		res.json(docs);
 	})
 	}
+	else{
+		details.find({year:req.params.arg},function (err,docs) {
+		if(err){console.log("Error removing Details")}
+		console.log(docs);
+		res.json(docs);
+	});
+	}
 	
 });
 
@@ -177,6 +184,10 @@ nodeapp.get('/ExpenseDetails/:id/:collection',function(req,res){
 	
 	
 });
+
+nodeapp.get('/ExpenseDetails/:year',function(req,res){
+	console.log(req.params.year);
+})
 
 nodeapp.delete('/ExpenseDetails/:id',function(req,res){
 	var id = req.params.id;

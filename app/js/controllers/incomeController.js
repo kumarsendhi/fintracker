@@ -8,22 +8,109 @@ app.controller('incomeController', function ($scope, $http, $cookies, messages) 
 
 	$scope.months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 	$scope.weeks = ['week 1', 'week 2', 'week 3', 'week 4', 'week 5'];
+	$scope.hideTable =true;
 
 
 	$scope.args = "";
 	$scope.message;
 	$scope.Details =[];
-
-
-	$scope.getMonth = function () {
-		$scope.monthsfromdb = $scope.months;
-		$scope.month = "(blank)";
+	$scope.OriginalData=""
+	$scope.filterData="";
+	
+	var nullDetails = function(){
+		$scope.Detail.year="";
+		$scope.Detail.month="";
+		$scope.Detail.week ="";
+		$scope.Detail.expenditures ="";
+		$scope.Detail.date="";
+		$scope.Detail.Amount="";
+	}
+	
+	var SpendingAmount=function(){
+		$scope.totalSpent=0;
+		for(var data in $scope.filterData){
+			$scope.totalSpent +=$scope.filterData[data].Amount;
+		}
 	}
 
-	$scope.getWeek = function () {
-		$scope.weekfromdb = $scope.weeks;
-		$scope.week = "(blank)";
+	
+	$scope.monitorYear =function(){
+		if($scope.Detail.year == undefined){
+			$scope.OriginalData ="";
+			$scope.filterData="";
+			$scope.Details ="";
+			$scope.hideTable =true;
+		}
 	}
+	
+	$scope.generateExpenseForm = function(){
+		if($scope.Detail == undefined || $scope.Detail.year == undefined){
+				$scope.message = {
+					status: messages.danger,
+					details: "Year is required"
+				}
+				return;
+		}
+		else{
+			$scope.message="";
+		}	
+		$scope.getExpenditure();
+		refresh();
+		$scope.hideTable =false;
+	}
+	
+	function refresh(){
+		$http.get('/ExpenseDetails'+$scope.Detail.year).then(function(docs){
+			console.log(docs);
+			$scope.OriginalData =docs.data;
+			$scope.filterData =docs.data;
+			$scope.Details =docs.data;
+			SpendingAmount();			
+		},function(err){
+			console.log(err);
+		});
+	}
+	
+	var filterDetails =function(){
+		$scope.filterData =$scope.OriginalData;
+		if($scope.Detail.month !=="" && $scope.Detail.month !== undefined && $scope.Detail.month !== null){
+			$scope.filterData =$scope.filterData.filter(function (i,n){
+        	return i.month===$scope.Detail.month;
+    		});
+		}
+		
+		if($scope.Detail.week !=="" && $scope.Detail.week !== undefined && $scope.Detail.week !== null ){
+			$scope.filterData =$scope.filterData.filter(function (i,n){
+        	return i.week===$scope.Detail.week;
+    		});
+		}
+		
+		if($scope.Detail.expenditures !=="" && $scope.Detail.expenditures !== undefined && $scope.Detail.expenditures !== null){
+			$scope.filterData =$scope.filterData.filter(function (i,n){
+        	return i.expenditures===$scope.Detail.expenditures;
+    		});
+		}
+		/**
+		if($scope.Detail.date !=="" && $scope.Detail.date !== undefined && $scope.Detail.date !== null){
+			$scope.filterData =$scope.filterData.filter(function (i,n){
+				return new Date(i.date).setHours(0, 0, 0, 0) === new Date($scope.Detail.date).setHours(0, 0, 0, 0);
+    		});
+		}
+		**/
+		
+		SpendingAmount();
+		$scope.Details =$scope.filterData;
+	}
+	
+	
+	
+
+
+	$scope.monitorChange = function () {	
+		filterDetails();	
+	}
+
+	
 
 	$scope.getExpenditure = function () {
 		if ($cookies.get('Expenditures') == null) {
@@ -56,7 +143,8 @@ app.controller('incomeController', function ($scope, $http, $cookies, messages) 
 		$http.post('/ExpenseDetails', $scope.Detail).then(function (docs) {
 			console.log(docs);
 			refresh();
-			$scope.Detail="";
+			nullDetails();
+			$scope.Detail.year =docs.data.year;
 			$scope.message = {
 				status: messages.success,
 				details: "success"
@@ -65,33 +153,6 @@ app.controller('incomeController', function ($scope, $http, $cookies, messages) 
 			console.log(err)
 		});
 	}
-	
-	function refresh(){
-		$http.get('/ExpenseDetails').then(function(docs){
-			console.log(docs);
-		/**
-			for (var i=0;i<docs.data.length;i++) {
-				(function(i){
-					console.log(docs.data[i].expenditures);
-				$http.get('/ExpenseDetails/'+docs.data[i].expenditures+'/expenditure').then(function(expdocs){
-					console.log(expdocs.data.expenditureCategory);
-					docs.data[i].expenditures = expdocs.data.expenditureCategory;
-				})
-				})(i);
-				
-			}
-			**/
-			
-			$scope.Details =docs.data;
-			$scope.Detail ="";
-			
-		},function(err){
-			console.log(err);
-		});
-	}
-	
-	refresh();
-	
 	
 	$scope.remove=function(id){
 		console.log(id);
