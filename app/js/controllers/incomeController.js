@@ -161,6 +161,7 @@ app.controller('incomeController', function ($scope, $http, $cookies, messages) 
 		console.log(id);
 		$http.delete('/ExpenseDetails/'+id).success(function(response){
 		 refresh();
+		 
 	 });
 	}
 	
@@ -173,6 +174,7 @@ app.controller('incomeController', function ($scope, $http, $cookies, messages) 
 		$scope.Detail.expenditures = response.expenditures;
 		//$scope.Detail.expenditures = response.expenditures.expenditureCategory;
 		//$scope.expenditure = $scope.expendituresfromdb[0].expenditureCategory;
+		filterDetails();
 		console.log($scope.Detail);
 		
 	});
