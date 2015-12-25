@@ -164,9 +164,7 @@ app.controller('incomeController', function ($scope, $http, $cookies, messages) 
 	$scope.edit=function(id){
 		console.log(id);
 		$http.get('/ExpenseDetails/'+id+'/details').success(function(response){
-		$scope.getMonth();
-		$scope.getWeek();	
-		$scope.getExpenditure();
+
 		
 		$scope.Detail =response;
 		$scope.Detail.expenditures = response.expenditures;
