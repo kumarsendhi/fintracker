@@ -20,7 +20,7 @@
       <tbody>
          <tr>
 					<td>{{Detail.year}}</td>
-					<td><select ng-model="Detail.month" ng-options="m for m in months" ng-change ="monitorChange()" ><option value="">(blank)</option></select></td>
+					<td><select ng-model="Detail.month" ng-options="m for m in months" ng-change ="monitorMonth()" ><option value="">(blank)</option></select></td>
 					<td><select ng-model="Detail.week" ng-options="w for w in weeks" ng-change ="monitorChange()"><option value="">(blank)</option></select></td>
           <td><select ng-model="Detail.expenditures" ng-change="monitorChange()" ng-options="e.expenditureCategory as e.expenditureCategory for e in expendituresfromdb"><option value="">(blank)</option></select></td>
 					<td><input class ="form-control"  ng-model="Detail.date" jqdatepicker></td>

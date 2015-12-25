@@ -181,6 +181,13 @@ nodeapp.get('/ExpenseDetails/:id/:collection',function(req,res){
 		res.json(docs);
 		})
 	}
+	else{
+		details.find({year:req.params.id,month:req.params.collection},function (err,docs) {
+		if(err){console.log("Error removing Details")}
+		console.log(docs);
+		res.json(docs);
+	});
+	}
 	
 	
 });

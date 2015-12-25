@@ -40,6 +40,7 @@ app.controller('incomeController', function ($scope, $http, $cookies, messages) 
 			$scope.OriginalData ="";
 			$scope.filterData="";
 			$scope.Details ="";
+			$scope.Detail ="";
 			$scope.hideTable =true;
 		}
 	}
@@ -56,19 +57,20 @@ app.controller('incomeController', function ($scope, $http, $cookies, messages) 
 			$scope.message="";
 		}	
 		$scope.getExpenditure();
-		refresh();
 		$scope.hideTable =false;
 	}
 	
 	function refresh(){
-		$http.get('/ExpenseDetails'+$scope.Detail.year).then(function(docs){
+		$http.get('/ExpenseDetails/'+$scope.Detail.year+'/'+$scope.Detail.month).then(function(docs){
 			console.log(docs);
 			$scope.OriginalData =docs.data;
 			$scope.filterData =docs.data;
 			$scope.Details =docs.data;
-			var i = $scope.Detail.year;
+			var y = $scope.Detail.year;
+			var m =$scope.Detail.month;
 			nullDetails();
-			$scope.Detail.year = i;
+			$scope.Detail.year = y;
+			$scope.Detail.month =m;
 			SpendingAmount();			
 		},function(err){
 			console.log(err);
@@ -107,7 +109,10 @@ app.controller('incomeController', function ($scope, $http, $cookies, messages) 
 	}
 	
 	
-	
+	$scope.monitorMonth = function(){
+		refresh();
+		filterDetails();
+	}
 
 
 	$scope.monitorChange = function () {	
@@ -149,6 +154,7 @@ app.controller('incomeController', function ($scope, $http, $cookies, messages) 
 			refresh();
 			nullDetails();
 			$scope.Detail.year =docs.data.year;
+			$scope.Detail.month =docs.data.month;
 			$scope.message = {
 				status: messages.success,
 				details: "success"
