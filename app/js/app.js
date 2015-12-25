@@ -14,6 +14,7 @@ app.config(function($routeProvider){
     templateUrl: 'templates/expenditureCategory.html',
         controller: 'expenditureCategoryController'
   })
+  /**
   .when('/weekconfig',{
     templateUrl: 'templates/weekconfig.html',
         controller: 'weekConfigController'
@@ -22,6 +23,7 @@ app.config(function($routeProvider){
     templateUrl: 'templates/monthconfig.html',
         controller: 'monthConfigController'
   })
+  **/
   .otherwise({
     redirectTo:'/ExpenseDetails'
   });
