@@ -1,0 +1,41 @@
+<div class="row-fluid">
+	<div ng-include="'./templates/messages.html'"></div>
+	<form class="form-inline" role="form">
+		<div class="form-group ">
+			<label for="SelectYear">Select Year:</label>
+			<input type="text" class="form-control" id="SelectYear" ng-model="Detail.year" ng-change="monitorYear()" required>
+		</div>
+		<button type="button" class="btn btn-default" ng-click="generateBackupForm()">BackupForm</button>
+		<div class="row" ng-hide="hideTable">
+			<table class="table table-striped">
+				<thead>
+					<th>Year</th>
+					<th>Month</th>
+				</thead>
+				<tbody>
+					<tr>
+						<td>{{Detail.year}}</td>
+						<td>
+							<select ng-model="Detail.month" ng-options="m for m in months" ng-change="monitorMonth()">
+								<option value="">(blank)</option>
+							</select>
+						</td>
+						<td colspan="4">
+							<button class="btn btn-primary" ng-click="backup()">Backup Data</button>
+							<div id="content"></div>
+						</td>
+					</tr>
+					<tr ng-repeat="detail in Details">
+						<td>{{detail.year}}</td>
+						<td>{{detail.month}}</td>
+						<td>{{detail.week}}</td>
+						<td>{{detail.expenditures}}</td>
+						<td>{{detail.date}}</td>
+						<td>{{detail.Amount}}</td>
+						<td>{{detail.expenseComment}}</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</form>
+</div>

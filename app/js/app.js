@@ -14,6 +14,10 @@ app.config(function($routeProvider){
     templateUrl: 'templates/expenditureCategory.html',
         controller: 'expenditureCategoryController'
   })
+   .when('/BackupData',{
+    templateUrl: 'templates/BackupData.html',
+        controller: 'BackupDataController'
+  })
   /**
   .when('/weekconfig',{
     templateUrl: 'templates/weekconfig.html',
