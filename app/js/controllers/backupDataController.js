@@ -99,7 +99,13 @@ app.controller('BackupDataController', function ($scope, $http, $cookies, messag
 	$scope.backup = function () {
 		if ($scope.Detail.month !== undefined && $scope.Detail.month !== null) {
 			var data = $scope.OriginalData
+			for(var i=0;i<data.length;i++){
+				delete data[i]["$$hashKey"];
+				delete data[i]["_id"];
+			}
 			var json = JSON.stringify(data);
+			
+			
 			var blob = new Blob([json], { type: "application/json" });
 			var url = URL.createObjectURL(blob);
 			var d = document.createElement('div');

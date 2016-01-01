@@ -148,6 +148,15 @@ nodeapp.post('/ExpenseDetails', jsonParser,function(req,res){
 	
 });
 
+nodeapp.post('/RestoreData',jsonParser,function(req,res){
+	console.log(req.body.length);
+	details.collection.insert(req.body, function(err,docs){
+		if(err){console.log("Error getting Expenditure Category")}
+		console.log("Result:" +docs);
+		res.json(docs);
+	})
+});
+
 nodeapp.get('/ExpenseDetails',function(req,res){
 /**
 	details.find({},function(err,docs){

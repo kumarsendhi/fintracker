@@ -18,6 +18,10 @@ app.config(function($routeProvider){
     templateUrl: 'templates/BackupData.html',
         controller: 'BackupDataController'
   })
+    .when('/RestoreData',{
+    templateUrl: 'templates/RestoreData.html',
+        controller: 'RestoreDataController'
+  })
   /**
   .when('/weekconfig',{
     templateUrl: 'templates/weekconfig.html',
