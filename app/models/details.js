@@ -10,6 +10,7 @@ var  detailsSchema =new Schema({
 	expenditures:String,
 	date:Date,
 	Amount:Number,
+	user:String,
 	expenseComment:String	
 });
 

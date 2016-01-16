@@ -271,7 +271,7 @@ nodeapp.post('/login', function(req, res, next) {
 		})
 	});
 
-	nodeapp.get('/ExpenseDetails/:id/:collection', function (req, res) {
+	nodeapp.get('/ExpenseDetails/:id/:collection/:user', function (req, res) {
 		console.log(req.params.id);
 		if (req.params.collection == "expenditure") {
 			expenditure.findOne({ _id: req.params.id }, function (err, docs) {
@@ -289,7 +289,7 @@ nodeapp.post('/login', function(req, res, next) {
 			})
 		}
 		else {
-			details.find({ year: req.params.id, month: req.params.collection }, function (err, docs) {
+			details.find({ year: req.params.id, month: req.params.collection,user:req.params.user }, function (err, docs) {
 				if (err) { console.log("Error removing Details") }
 				console.log(docs);
 				res.json(docs);
