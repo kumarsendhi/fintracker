@@ -3,8 +3,8 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var userSchema = new Schema({
-	userName:String,
-	password:String
+	userName:{ type : String , unique : true,required : true },
+	password:{ type : String , required : true}
 });
 
 var users = mongoose.model('users',userSchema);

@@ -31,4 +31,9 @@ app.controller('loginController', function ($scope, $http, $cookies, $location,$
       $location.url('/login');
     });
   };
+  
+  $scope.postSignUp =function(){
+     $location.url('/signin');
+  }
+  
 })

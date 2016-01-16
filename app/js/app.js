@@ -76,6 +76,10 @@ app.config(function ($routeProvider, $locationProvider, $httpProvider) {
       templateUrl: 'templates/logout.html',
       controller: 'logOutController'
     })
+     .when('/signin', {
+      templateUrl: 'templates/signin.html',
+      controller: 'signinController'
+    })
     .otherwise({
       redirectTo: '/login'
     });

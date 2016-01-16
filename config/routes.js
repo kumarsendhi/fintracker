@@ -230,6 +230,21 @@ nodeapp.post('/login', function(req, res, next) {
 		})
 
 	});
+	
+	nodeapp.post('/signin', jsonParser, function (req, res) {
+		console.log(req.body);
+		var user = new users(req.body);
+		user.save(function (err, docs) {
+			if (err) {
+				console.log(err);
+				res.status(400).send(err.message);;
+			}
+			else {
+				res.json(docs);
+			}
+		})
+
+	});
 
 	nodeapp.post('/RestoreData', jsonParser, function (req, res) {
 		console.log(req.body.length);
