@@ -81,7 +81,7 @@ app.config(function ($routeProvider, $locationProvider, $httpProvider) {
       controller: 'signinController'
     })
     .otherwise({
-      redirectTo: '/login'
+      redirectTo: '/ExpenseDetails'
     });
 });
 
