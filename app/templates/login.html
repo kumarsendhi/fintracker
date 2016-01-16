@@ -1,0 +1,19 @@
+<div class="row-fluid">
+	<div ng-include="'./templates/messages.html'"></div>
+	<form class="form-inline" role="form">
+		<div class="form-group ">
+			<div>
+				<label>Username:</label>
+				<input type="text" ng-model="user.username" name="username" required />
+				<br/>
+			</div>
+			<div>
+				<label>Password:</label>
+				<input type="password" ng-model="user.password" name="password" required />
+			</div>
+			<div>
+				<button class="btn btn-primary" ng-click="postLogin()">Log-in</button>
+			</div>
+		</div>
+	</form>
+</div>
