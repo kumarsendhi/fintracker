@@ -4,7 +4,7 @@ var j = jQuery.noConflict();
 
 var app = angular.module("fintrackerApp");
 
-app.controller('BackupDataController', function ($scope, $http, $cookies, messages) {
+app.controller('BackupDataController', function ($scope, $http, $cookies,$rootScope, messages) {
 	console.log("inside backup controller")
 	$scope.months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 	$scope.hideTable = true;
@@ -52,7 +52,7 @@ app.controller('BackupDataController', function ($scope, $http, $cookies, messag
 
 	function refresh() {
 		var dfd = j.Deferred();
-		$http.get('/ExpenseDetails/' + $scope.Detail.year + '/' + $scope.Detail.month).then(function (docs) {
+		$http.get('/ExpenseDetails/' + $scope.Detail.year + '/' + $scope.Detail.month+'/'+$rootScope.User).then(function (docs) {
 			console.log(docs);
 			$scope.OriginalData = docs.data;
 			$scope.filterData = docs.data;
