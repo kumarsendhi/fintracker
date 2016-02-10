@@ -75,6 +75,7 @@ app.controller('incomeController', function ($scope, $http, $cookies,$rootScope,
 			$scope.Detail.year = y;
 			$scope.Detail.month = m;
 			SpendingAmount();
+			$scope.Hello = chart.drawPieChart($scope.filterData);
 			dfd.resolve();
 		}, function (err) {
 			console.log(err);
