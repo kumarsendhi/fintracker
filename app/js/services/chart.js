@@ -97,7 +97,7 @@ if(d3.select("svg")!=null){
   d3.select("svg").remove();
 }
 var m = [70, 40, 40, 70],
-    w = 460 - m[1] - m[3],
+    w = 500 - m[1] - m[3],
     h = 430 - m[0] - m[2],
     modData =jsonData.slice();
     var data=[];
@@ -119,8 +119,9 @@ var m = [70, 40, 40, 70],
         }
       }
     }
-
-var format = d3.format(",.0f");
+    
+    if(modData.length!==0){
+      var format = d3.format(",.0f");
 
 var x = d3.scale.linear().range([0, w]),
     y = d3.scale.ordinal().rangeRoundBands([0, h], .1);
@@ -169,9 +170,7 @@ var svg = d3.select("#chart").append("svg")
   svg.append("g")
       .attr("class", "y axis")
       .call(yAxis);
-
-
-  
+    }
 
 	}
 	
