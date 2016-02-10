@@ -5,7 +5,7 @@ var j = jQuery.noConflict();
 
 var app = angular.module("fintrackerApp");
 
-app.controller('incomeController', function ($scope, $http, $cookies,$rootScope, messages) {
+app.controller('incomeController', function ($scope, $http, $cookies,$rootScope, messages,chart) {
 	console.log("successfully inside income controller");
 
 	$scope.months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
@@ -112,6 +112,7 @@ app.controller('incomeController', function ($scope, $http, $cookies,$rootScope,
 		**/
 
 		SpendingAmount();
+		$scope.Hello = chart.drawPieChart($scope.filterData);
 		$scope.Details = $scope.filterData;
 	}
 

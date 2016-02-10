@@ -7,6 +7,7 @@
   </div>
   <button type="button" class="btn btn-default" ng-click="generateExpenseForm()">ExpenseForm</button>
   <div class="row" ng-hide="hideTable">
+    <div  ng-include="'./templates/chart.html'"></div>
   <table class="table table-striped">
     <thead>
       <th>Year</th>
@@ -47,5 +48,6 @@
   </div>
   
 </form>
+  
    </span>
 </div>
