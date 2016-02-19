@@ -1,53 +1,110 @@
-<div class="row-fluid">  
-  <div  ng-include="'./templates/messages.html'"></div>
- <form class="form-inline" role="form">
-  <div class="form-group ">
-    <label for="SelectYear">Select Year:</label>
-    <input type="text" class="form-control" id="SelectYear" ng-model="Detail.year" ng-change="monitorYear()" required>
-  </div>
-  <button type="button" class="btn btn-default" ng-click="generateExpenseForm()">ExpenseForm</button>
-  <div class="row" ng-hide="hideTable">
-    <div  ng-include="'./templates/chart.html'"></div>
-  <table class="table table-striped">
-    <thead>
-      <th>Year</th>
-	  <th>Month</th>
-	  <th>Week</th>
-	  <th>Expense Category</th>
-	  <th>Date</th>
-	  <th>Amount Spent</th>
-    <th>Comment</th>
-      </thead>
-      <tbody>
-         <tr>
-					<td>{{Detail.year}}</td>
-					<td><select ng-model="Detail.month" ng-options="m for m in months" ng-change ="monitorMonth()" ><option value="">(blank)</option></select></td>
-					<td><select ng-model="Detail.week" ng-options="w for w in weeks" ng-change ="monitorChange()"><option value="">(blank)</option></select></td>
-          <td><select ng-model="Detail.expenditures" ng-change="monitorChange()" ng-options="e.expenditureCategory as e.expenditureCategory for e in expendituresfromdb"><option value="">(blank)</option></select></td>
-					<td><input class ="form-control"  ng-model="Detail.date" jqdatepicker></td>
-					<td><input class ="form-control" ng-model="Detail.Amount"></td>
-          <td><textarea class ="form-control" ng-model="Detail.expenseComment"></textarea></td>
-          <td><button class="btn btn-primary" ng-click="addDetails()">Add Details</button></td>
-					<td><button class="btn btn-info" ng-click="update()">Update</button></td>
-					<td><button class="btn btn-info" ng-click="deselect()">Clear</button></td>
-					</tr>
-          <tr ng-repeat="detail in Details">
-            <td>{{detail.year}}</td>
-            <td>{{detail.month}}</td>
-            <td>{{detail.week}}</td>
-            <td>{{detail.expenditures}}</td>
-            <td>{{detail.date}}</td>
-            <td>{{detail.Amount}}</td>
-            <td>{{detail.expenseComment}}</td>
-            <td><button class="btn btn-danger" ng-click="remove(detail._id)">Remove</button></td>
-				<td><button class="btn btn-warning" ng-click="edit(detail._id)">Edit</button></td>
-          </tr>
-          <tr class="danger"><td colspan="5"><h3 >Total Spent:</h3></td><td colspan="5">{{totalSpent}}</td></tr>
-      </tbody>  
-  </table>
-  </div>
-  
-</form>
-  
-   </span>
-</div>
+<div class="row-fluid">
+    <div ng-include="'./templates/messages.html'"></div>
+    <div class="container"> 
+    <div class="col-md-6 col-md-offset-3">
+        <form class="form-inline">
+            <div class="form-group">
+                <label for="SelectYear">Select Year:</label>
+                <input type="text" class="form-control" id="SelectYear" ng-model="Detail.year" ng-change="monitorYear()" required>
+            </div>
+            <button type="button" class="btn btn-primary form-control" ng-click="generateExpenseForm()">ExpenseForm</button>
+        </form>
+    </div>
+    </div>
+
+    <div class="container  well well-sm" ng-hide="hideTable">
+        <div class="row" >
+            <div class="col-md-6">
+                <form>
+                    <div class="form-group">
+                        <label for="year">Year</label>
+                        <div class="form-control" id="year">
+                            {{Detail.year}}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="month">Month</label>
+                        <select class="form-control" id="month" ng-model="Detail.month" ng-options="m for m in months" ng-change="monitorMonth()">
+                            <option value="">(blank)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="week">Week</label>
+                        <select class="form-control" id="week" ng-model="Detail.week" ng-options="w for w in weeks" ng-change="monitorChange()">
+                            <option value="">(blank)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="expenditures">Expense Category</label>
+                        <select class="form-control" id="expenditures" ng-model="Detail.expenditures" ng-change="monitorChange()" ng-options="e.expenditureCategory as e.expenditureCategory for e in expendituresfromdb">
+                            <option value="">(blank)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="date">Date</label>
+                        <input class="form-control" id="date" class="form-control" ng-model="Detail.date" jqdatepicker>
+                    </div>
+                    <div class="form-group">
+                        <label for="Amount">Amount Spent</label>
+                        <input class="form-control" id="Amount" class="form-control" ng-model="Detail.Amount">
+                    </div>
+                    <div class="form-group" ">
+                    <label for=" expensecomment ">
+                        Comment</label>
+                        <textarea class="form-control " id="expenseComment " class="form-control " ng-model="Detail.expenseComment "></textarea>
+                    </div>
+                    <div class="form-group ">
+                        <button class="btn btn-primary " ng-click="addDetails() ">Add Details</button>
+                        <button class="btn btn-info " ng-click="update() ">Update</button>
+                        <button class="btn btn-info " ng-click="deselect() ">Clear</button>
+                    </div>
+                </form>
+            </div>
+
+            <div ng-include="'./templates/chart.html'">
+            </div>
+        </div>
+        
+        <div class="container" ng-hide="hideTable">
+            <h3 >Total Spent:{{totalSpent}}</h3>
+            </div>
+
+        <div class="container col-md-12 ">
+            <ul ng-repeat="detail in Details " class="list-group ">
+                <li class="list-group-item col-md-12 ">
+                    <p>
+                        <div class="container ">
+                            <span class="col-md-2 ">
+                                {{detail.year}}
+                            </span>
+                            <span class="col-md-2 ">
+                                {{detail.month}}
+                            </span>
+                            <span class="col-md-2 ">
+                                {{detail.week}}
+                            </span>
+                            <span class="col-md-2 ">
+                                {{detail.expenditures}}
+                            </span>
+                            <span class="col-md-2 ">
+                                {{detail.Amount}}
+                            </span>
+                            <span class="col-md-2 ">
+                                {{detail.expenseComment}}
+                            </span>
+                        </div>
+                        <hr />
+                        <div class="container ">
+                            <span class="col-md-offset-9 ">
+                                <button class="btn btn-danger " ng-click="remove(detail._id) ">Remove</button>
+                                <button class="btn btn-warning " ng-click="edit(detail._id) ">Edit</button>
+                            </span>
+                        </div>
+                    </p>
+                </li>
+            </ul>
+            
+        </div>
+
+
+    </div>
