@@ -8,6 +8,7 @@ var  detailsSchema =new Schema({
 	week:String,
 	//expenditures:{type: Schema.ObjectId, ref: 'Expenditures'},
 	expenditures:String,
+    paymentMode:String,
 	date:Date,
 	Amount:Number,
 	user:String,

@@ -1,6 +1,7 @@
 "use strict";
 
 var expenditure = require('../app/models/expenditures')
+var paymentmode = require('../app/models/paymentmode')
 var week = require('../app/models/weeks')
 var months = require('../app/models/months')
 var details = require('../app/models/details')
@@ -26,7 +27,7 @@ module.exports = function (nodeapp) {
 		console.log('done');
 	})
 **/
-
+/** Start of Expenditure Category  */
 	nodeapp.post('/ExpenditureCategory', jsonParser, function (req, res) {
 		console.log(req.body);
 
@@ -41,6 +42,207 @@ module.exports = function (nodeapp) {
 			}
 		})
 	});
+    
+    nodeapp.get('/ExpenditureCategory', function (req, res) {
+		console.log("get of Expenditure");
+		expenditure.find({}, function (err, docs) {
+			if (err) { console.log("Error getting Expenditure Category") }
+			console.log("Result:" + docs);
+			res.json(docs);
+		})
+	});
+
+    
+  /** End of Expenditure Category   */
+    
+    /** Start of Payment Mode Category  */
+    
+    	nodeapp.post('/PaymentMode', jsonParser, function (req, res) {
+		console.log(req.body);
+
+		var pay = new paymentmode(req.body);
+
+		pay.save(function (err, docs) {
+			if (err) {
+				console.log(err);
+			}
+			else {
+				res.json(docs);
+			}
+		})
+	});
+    
+    
+    nodeapp.get('/PaymentMode', function (req, res) {
+		console.log("get of Payment Mode");
+		paymentmode.find({}, function (err, docs) {
+			if (err) { console.log("Error getting paymentmode") }
+			console.log("Result:" + docs);
+			res.json(docs);
+		})
+	});
+
+   /** End of Payment Mode Category  */ 
+   
+   
+    /** Start of ExpenseDetails Category  */
+    
+    nodeapp.get('/ExpenseDetails:arg', function (req, res) {
+		if (req.params.arg == "month") {
+			months.find({}, function (err, docs) {
+				if (err) { console.log("Error getting Expenditure Category") }
+				console.log("Result:" + docs);
+				res.json(docs);
+			})
+		}
+		else if (req.params.arg == "week") {
+			week.find({}, function (err, docs) {
+				if (err) { console.log("Error getting Expenditure Category") }
+				console.log("Result:" + docs);
+				res.json(docs);
+			})
+		}
+		else if (req.params.arg == "expenditure") {
+			expenditure.find({}, function (err, docs) {
+				if (err) { console.log("Error getting Expenditure Category") }
+				console.log("Result:" + docs);
+				res.json(docs);
+			})
+		}
+        else if (req.params.arg == "paymentMode") {
+			paymentmode.find({}, function (err, docs) {
+				if (err) { console.log("Error getting Expenditure Category") }
+				console.log("Result:" + docs);
+				res.json(docs);
+			})
+		}
+		else {
+			details.find({ year: req.params.arg }, function (err, docs) {
+				if (err) { console.log("Error removing Details") }
+				console.log(docs);
+				res.json(docs);
+			});
+		}
+
+	});
+
+	nodeapp.post('/ExpenseDetails', jsonParser, function (req, res) {
+		console.log(req.body);
+		var det = new details(req.body);
+		det.save(function (err, docs) {
+			if (err) {
+				console.log(err);
+			}
+			else {
+				res.json(docs);
+			}
+		})
+
+	});
+    
+    
+    nodeapp.put('/ExpenseDetails/:id', jsonParser, function (req, res) {
+		/**
+		var id = req.params.id;
+		console.log(req.body.name);
+		db.contactlist.findAndModify({
+			query:{_id:mongojs.ObjectId(id)},
+			update:{$set:{name:req.body.name,email:req.body.email,number:req.body.number}},
+			new:true},function(err,doc){
+				res.json(doc);
+			}
+		)
+		**/
+		var id = req.params.id;
+		console.log(req.body);
+		details.findById(req.params.id, function (err, doc) {
+			if (err) {
+				console.log("Error getting document");
+				return;
+			}
+			console.log("found for update" + doc);
+			doc.year = req.body.year;
+			doc.month = req.body.month;
+			doc.week = req.body.week;
+			doc.expenditures = req.body.expenditures;
+			doc.date = req.body.date;
+			doc.Amount = req.body.Amount;
+			doc.expenseComment = req.body.expenseComment;
+			doc.save(function (err, docs) {
+				if (err) {
+					console.log(err);
+				}
+				else {
+					res.json(docs);
+				}
+			})
+
+
+		})
+
+	})
+    
+    nodeapp.get('/ExpenseDetails/:year', function (req, res) {
+		console.log(req.params.year);
+	})
+
+	nodeapp.delete('/ExpenseDetails/:id', function (req, res) {
+		var id = req.params.id;
+		console.log(id);
+
+		details.remove({ _id: req.params.id }, function (err, docs) {
+			if (err) { console.log("Error removing Details") }
+			console.log(docs);
+			res.json(docs);
+		});
+
+	})
+    
+    nodeapp.get('/ExpenseDetails/:id/:collection/:user', function (req, res) {
+		console.log(req.params.id);
+		if (req.params.collection == "expenditure") {
+			expenditure.findOne({ _id: req.params.id }, function (err, docs) {
+				if (err) { console.log("Error getting Expenditure Category") }
+				console.log(docs);
+				res.json(docs);
+			})
+		}
+		else if (req.params.collection == "details") {
+			//details.findOne({_id:req.params.id}).populate('expenditures').exec(function(err,docs){
+			details.findOne({ _id: req.params.id }).exec(function (err, docs) {
+				if (err) { console.log("Error getting Expenditure Category") }
+				console.log("Result:" + docs);
+				res.json(docs);
+			})
+		}
+		else {
+			details.find({ year: req.params.id, month: req.params.collection,user:req.params.user }, function (err, docs) {
+				if (err) { console.log("Error removing Details") }
+				console.log(docs);
+				res.json(docs);
+			});
+		}
+
+
+	});
+
+	nodeapp.get('/ExpenseDetails', function (req, res) {
+		/**
+			details.find({},function(err,docs){
+				if(err){console.log("Error getting Expenditure Category")}
+				console.log("Result:" +docs);
+				res.json(docs);
+			})
+			**/
+		//details.find({}).populate('expenditures').exec(function(err,docs){
+		details.find({}).exec(function (err, docs) {
+			if (err) { console.log("Error getting Expenditure Category") }
+			console.log("Result:" + docs);
+			res.json(docs);
+		})
+	});
+    
+     /** End of ExpenseDetails Category  */
 
 	passport.use(new Strategy(
 		function (username, password, cb) {
@@ -125,15 +327,7 @@ nodeapp.post('/login', function(req, res, next) {
     })(req, res, next);
   });
 **/
-	nodeapp.get('/ExpenditureCategory', function (req, res) {
-		console.log("get of Expenditure");
-		expenditure.find({}, function (err, docs) {
-			if (err) { console.log("Error getting Expenditure Category") }
-			console.log("Result:" + docs);
-			res.json(docs);
-		})
-	});
-
+	
 
 	nodeapp.post('/weekconfig', jsonParser, function (req, res) {
 		console.log(req.body);
@@ -185,51 +379,7 @@ nodeapp.post('/login', function(req, res, next) {
 	});
 
 
-	nodeapp.get('/ExpenseDetails:arg', function (req, res) {
-		if (req.params.arg == "month") {
-			months.find({}, function (err, docs) {
-				if (err) { console.log("Error getting Expenditure Category") }
-				console.log("Result:" + docs);
-				res.json(docs);
-			})
-		}
-		else if (req.params.arg == "week") {
-			week.find({}, function (err, docs) {
-				if (err) { console.log("Error getting Expenditure Category") }
-				console.log("Result:" + docs);
-				res.json(docs);
-			})
-		}
-		else if (req.params.arg == "expenditure") {
-			expenditure.find({}, function (err, docs) {
-				if (err) { console.log("Error getting Expenditure Category") }
-				console.log("Result:" + docs);
-				res.json(docs);
-			})
-		}
-		else {
-			details.find({ year: req.params.arg }, function (err, docs) {
-				if (err) { console.log("Error removing Details") }
-				console.log(docs);
-				res.json(docs);
-			});
-		}
-
-	});
-
-	nodeapp.post('/ExpenseDetails', jsonParser, function (req, res) {
-		console.log(req.body);
-		var det = new details(req.body);
-		det.save(function (err, docs) {
-			if (err) {
-				console.log(err);
-			}
-			else {
-				res.json(docs);
-			}
-		})
-
-	});
+	
 	
 	nodeapp.post('/signin', jsonParser, function (req, res) {
 		console.log(req.body);
@@ -254,110 +404,5 @@ nodeapp.post('/login', function(req, res, next) {
 			res.json(docs);
 		})
 	});
-
-	nodeapp.get('/ExpenseDetails', function (req, res) {
-		/**
-			details.find({},function(err,docs){
-				if(err){console.log("Error getting Expenditure Category")}
-				console.log("Result:" +docs);
-				res.json(docs);
-			})
-			**/
-		//details.find({}).populate('expenditures').exec(function(err,docs){
-		details.find({}).exec(function (err, docs) {
-			if (err) { console.log("Error getting Expenditure Category") }
-			console.log("Result:" + docs);
-			res.json(docs);
-		})
-	});
-
-	nodeapp.get('/ExpenseDetails/:id/:collection/:user', function (req, res) {
-		console.log(req.params.id);
-		if (req.params.collection == "expenditure") {
-			expenditure.findOne({ _id: req.params.id }, function (err, docs) {
-				if (err) { console.log("Error getting Expenditure Category") }
-				console.log(docs);
-				res.json(docs);
-			})
-		}
-		else if (req.params.collection == "details") {
-			//details.findOne({_id:req.params.id}).populate('expenditures').exec(function(err,docs){
-			details.findOne({ _id: req.params.id }).exec(function (err, docs) {
-				if (err) { console.log("Error getting Expenditure Category") }
-				console.log("Result:" + docs);
-				res.json(docs);
-			})
-		}
-		else {
-			details.find({ year: req.params.id, month: req.params.collection,user:req.params.user }, function (err, docs) {
-				if (err) { console.log("Error removing Details") }
-				console.log(docs);
-				res.json(docs);
-			});
-		}
-
-
-	});
-
-	nodeapp.get('/ExpenseDetails/:year', function (req, res) {
-		console.log(req.params.year);
-	})
-
-	nodeapp.delete('/ExpenseDetails/:id', function (req, res) {
-		var id = req.params.id;
-		console.log(id);
-
-		details.remove({ _id: req.params.id }, function (err, docs) {
-			if (err) { console.log("Error removing Details") }
-			console.log(docs);
-			res.json(docs);
-		});
-
-
-
-
-
-	})
-
-	nodeapp.put('/ExpenseDetails/:id', jsonParser, function (req, res) {
-		/**
-		var id = req.params.id;
-		console.log(req.body.name);
-		db.contactlist.findAndModify({
-			query:{_id:mongojs.ObjectId(id)},
-			update:{$set:{name:req.body.name,email:req.body.email,number:req.body.number}},
-			new:true},function(err,doc){
-				res.json(doc);
-			}
-		)
-		**/
-		var id = req.params.id;
-		console.log(req.body);
-		details.findById(req.params.id, function (err, doc) {
-			if (err) {
-				console.log("Error getting document");
-				return;
-			}
-			console.log("found for update" + doc);
-			doc.year = req.body.year;
-			doc.month = req.body.month;
-			doc.week = req.body.week;
-			doc.expenditures = req.body.expenditures;
-			doc.date = req.body.date;
-			doc.Amount = req.body.Amount;
-			doc.expenseComment = req.body.expenseComment;
-			doc.save(function (err, docs) {
-				if (err) {
-					console.log(err);
-				}
-				else {
-					res.json(docs);
-				}
-			})
-
-
-		})
-
-	})
 
 }

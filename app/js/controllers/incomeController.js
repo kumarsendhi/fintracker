@@ -24,6 +24,7 @@ app.controller('incomeController', function ($scope, $http, $cookies,$rootScope,
 		$scope.Detail.month = "";
 		$scope.Detail.week = "";
 		$scope.Detail.expenditures = "";
+        $scope.Detail.paymentMode="";
 		$scope.Detail.date = "";
 		$scope.Detail.Amount = "";
 		$scope.Detail.expenseComment = "";
@@ -59,6 +60,7 @@ app.controller('incomeController', function ($scope, $http, $cookies,$rootScope,
 			$scope.message = "";
 		}
 		$scope.getExpenditure();
+        $scope.getPaymentMode();
 		$scope.hideTable = false;
 	}
 
@@ -104,6 +106,12 @@ app.controller('incomeController', function ($scope, $http, $cookies,$rootScope,
 				return i.expenditures === $scope.Detail.expenditures;
 			});
 		}
+        if ($scope.Detail.paymentMode !== "" && $scope.Detail.paymentMode !== undefined && $scope.Detail.paymentMode !== null) {
+			$scope.filterData = $scope.filterData.filter(function (i, n) {
+				return i.paymentMode === $scope.Detail.paymentMode;
+			});
+		}
+        
 		/**
 		if($scope.Detail.date !=="" && $scope.Detail.date !== undefined && $scope.Detail.date !== null){
 			$scope.filterData =$scope.filterData.filter(function (i,n){
@@ -157,6 +165,34 @@ app.controller('incomeController', function ($scope, $http, $cookies,$rootScope,
 			$scope.expenditure = "(blank)";
 		}
 	}
+    
+    
+    	$scope.getPaymentMode = function () {
+		if ($cookies.get('PaymentMode') == null) {
+			$scope.paymentModes = [];
+		} else {
+			$scope.paymentModes = JSON.parse($cookies.get('PaymentMode'));
+		}
+		if ($scope.paymentModes.length <= 0) {
+			$scope.args = "paymentMode";
+			$http.get('/ExpenseDetails' + $scope.args).then(function (docs) {
+				$scope.paymentModefromdb = docs.data;
+				$cookies.put('PaymentMode', JSON.stringify($scope.paymentModefromdb));
+				$scope.paymentMode = "(blank)";
+				$scope.message = {
+					status: messages.info,
+					details: "info"
+				}
+			}, function (err) {
+				console.log(err);
+			});
+		}
+		else {
+			$scope.paymentModefromdb = $scope.paymentModes;
+			$scope.paymentMode = "(blank)";
+		}
+	}
+    
 
 	$scope.addDetails = function () {
 		console.log($scope.Detail);

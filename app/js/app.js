@@ -54,6 +54,13 @@ app.config(function ($routeProvider, $locationProvider, $httpProvider) {
         loggedin: checkLoggedin
       }
     })
+      .when('/PaymentMode', {
+      templateUrl: 'templates/paymentMode.html',
+      controller: 'paymentModeController',
+      resolve: {
+        loggedin: checkLoggedin
+      }
+    })
     .when('/BackupData', {
       templateUrl: 'templates/BackupData.html',
       controller: 'BackupDataController',
