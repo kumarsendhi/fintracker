@@ -1,0 +1,27 @@
+
+<div class="row-fluid">  
+  <div  ng-include="'./templates/messages.html'"></div>
+ <form class="form-inline" role="form">
+  <div class="form-group ">
+    <label for="PaymentMode">Payment Mode:</label>
+    <input type="text" class="form-control" id="PaymentMode" ng-model="paymentMode">
+  </div>
+  <button type="button" class="btn btn-default" ng-click="savePaymentMode()">Submit</button>
+  <div class="row">
+  <table class="table table-striped">
+    <thead>
+      <th>Payment Mode</th>
+      </thead>
+      <tbody>
+        <tr ng-repeat="payMode in paymentModes">
+          <td>
+            {{payMode.paymentMode}}
+            </td>
+        </tr>
+        </tbody>  
+  </table>
+  </div>
+  
+</form>
+   </span>
+</div>
