@@ -165,6 +165,7 @@ module.exports = function (nodeapp) {
 			doc.month = req.body.month;
 			doc.week = req.body.week;
 			doc.expenditures = req.body.expenditures;
+            doc.paymentMode = req.body.paymentMode;
 			doc.date = req.body.date;
 			doc.Amount = req.body.Amount;
 			doc.expenseComment = req.body.expenseComment;
