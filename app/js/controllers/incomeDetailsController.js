@@ -5,12 +5,12 @@ var j = jQuery.noConflict();
 
 var app = angular.module("fintrackerApp");
 
-app.controller('incomeDetailsController', function ($scope, $http, $cookies,$rootScope, messages,chart) {
+app.controller('incomeDetailsController', function ($scope, $http, $cookies,$rootScope, messages,chartIncome) {
 	console.log("successfully inside income Incomes controller");
 
 	$scope.months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 	$scope.weeks = ['week 1', 'week 2', 'week 3', 'week 4', 'week 5'];
-    $scope.types=['Salary','Rent'];
+    $scope.types=['Salary','Rent','Cash Withdraw'];
 	$scope.hideTable = true;
 
 
@@ -33,7 +33,12 @@ app.controller('incomeDetailsController', function ($scope, $http, $cookies,$roo
 	var MonthlyIncomeAmount = function () {
 		$scope.monthlyIncome = 0;
 		for (var data in $scope.filterData) {
-			$scope.monthlyIncome += $scope.filterData[data].Amount;
+            if($scope.filterData[data].type !== 'Cash Withdraw' ){
+                $scope.monthlyIncome += $scope.filterData[data].Amount;
+            }
+            else{
+                 $scope.monthlyIncome -= $scope.filterData[data].Amount;
+            }		
 		}
 	}
 
@@ -75,7 +80,7 @@ app.controller('incomeDetailsController', function ($scope, $http, $cookies,$roo
 			$scope.Income.year = y;
 			$scope.Income.month = m;
 			MonthlyIncomeAmount();
-			$scope.Hello = chart.drawPieChart($scope.filterData);
+			$scope.Hello = chartIncome.drawPieChart($scope.filterData);
 			dfd.resolve();
 		}, function (err) {
 			console.log(err);
@@ -115,7 +120,7 @@ app.controller('incomeDetailsController', function ($scope, $http, $cookies,$roo
 		**/
 
 		MonthlyIncomeAmount();
-		$scope.Hello = chart.drawPieChart($scope.filterData);
+		$scope.Hello = chartIncome.drawPieChart($scope.filterData);
 		$scope.Incomes = $scope.filterData;
 	}
 
