@@ -47,6 +47,13 @@ app.config(function ($routeProvider, $locationProvider, $httpProvider) {
         loggedin: checkLoggedin
       }
     })
+     .when('/IncomeDetails', {
+      templateUrl: 'templates/IncomeDetails.html',
+      controller: 'incomeDetailsController',
+      resolve: {
+        loggedin: checkLoggedin
+      }
+    })
     .when('/ExpenditureCategory', {
       templateUrl: 'templates/expenditureCategory.html',
       controller: 'expenditureCategoryController',

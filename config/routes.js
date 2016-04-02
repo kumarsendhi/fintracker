@@ -2,6 +2,7 @@
 
 var expenditure = require('../app/models/expenditures')
 var paymentmode = require('../app/models/paymentmode')
+var income = require('../app/models/income')
 var week = require('../app/models/weeks')
 var months = require('../app/models/months')
 var details = require('../app/models/details')
@@ -54,6 +55,127 @@ module.exports = function (nodeapp) {
 
     
   /** End of Expenditure Category   */
+  
+  /** Start of Income Category  */
+   nodeapp.get('/IncomeDetails:arg', function (req, res) {
+		if (req.params.arg == "month") {
+			months.find({}, function (err, docs) {
+				if (err) { console.log("Error getting Expenditure Category") }
+				console.log("Result:" + docs);
+				res.json(docs);
+			})
+		}
+		else if (req.params.arg == "week") {
+			week.find({}, function (err, docs) {
+				if (err) { console.log("Error getting Expenditure Category") }
+				console.log("Result:" + docs);
+				res.json(docs);
+			})
+		}
+		else {
+			details.find({ year: req.params.arg }, function (err, docs) {
+				if (err) { console.log("Error removing Details") }
+				console.log(docs);
+				res.json(docs);
+			});
+		}
+
+	});
+
+	nodeapp.post('/IncomeDetails', jsonParser, function (req, res) {
+		console.log(req.body);
+		var inc = new income(req.body);
+		inc.save(function (err, docs) {
+			if (err) {
+				console.log(err);
+			}
+			else {
+				res.json(docs);
+			}
+		})
+
+	});
+    
+    
+    nodeapp.put('/IncomeDetails/:id', jsonParser, function (req, res) {
+		
+		var id = req.params.id;
+		console.log(req.body);
+		income.findById(req.params.id, function (err, doc) {
+			if (err) {
+				console.log("Error getting document");
+				return;
+			}
+			console.log("found for update" + doc);
+			doc.year = req.body.year;
+			doc.month = req.body.month;
+			doc.week = req.body.week;
+			doc.type = req.body.type;
+			doc.date = req.body.date;
+			doc.Amount = req.body.Amount;
+			doc.incomeComment = req.body.incomeComment;
+			doc.save(function (err, docs) {
+				if (err) {
+					console.log(err);
+				}
+				else {
+					res.json(docs);
+				}
+			})
+
+
+		})
+
+	})
+    
+    nodeapp.get('/IncomeDetails/:year', function (req, res) {
+		console.log(req.params.year);
+	})
+
+	nodeapp.delete('/IncomeDetails/:id', function (req, res) {
+		var id = req.params.id;
+		console.log(id);
+
+		income.remove({ _id: req.params.id }, function (err, docs) {
+			if (err) { console.log("Error removing Income") }
+			console.log(docs);
+			res.json(docs);
+		});
+
+	})
+    
+    nodeapp.get('/IncomeDetails/:id/:collection/:user', function (req, res) {
+		console.log(req.params.id);
+		
+		 if (req.params.collection == "Incomes") {
+			
+			income.findOne({ _id: req.params.id }).exec(function (err, docs) {
+				if (err) { console.log("Error getting particular income") }
+				console.log("Result:" + docs);
+				res.json(docs);
+			})
+		}
+		else {
+			income.find({ year: req.params.id, month: req.params.collection,user:req.params.user }, function (err, docs) {
+				if (err) { console.log("Error getting Income") }
+				console.log(docs);
+				res.json(docs);
+			});
+		}
+
+
+	});
+
+	nodeapp.get('/IncomeDetails', function (req, res) {
+		
+		income.find({}).exec(function (err, docs) {
+			if (err) { console.log("Error getting Income") }
+			console.log("Result:" + docs);
+			res.json(docs);
+		})
+	});
+  /** End of Income Category  */
+  
     
     /** Start of Payment Mode Category  */
     

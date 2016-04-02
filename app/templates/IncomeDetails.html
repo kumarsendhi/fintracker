@@ -1,0 +1,111 @@
+<div class="row-fluid">
+    <div ng-include="'./templates/messages.html'"></div>
+    <div class="container"> 
+    <div class="col-md-6 col-md-offset-3">
+        <form class="form-inline">
+            <div class="form-group">
+                <label for="SelectYear">Select Year:</label>
+                <input type="text" class="form-control" id="SelectYear" ng-model="Income.year" ng-change="monitorYear()" required>
+            </div>
+            <button type="button" class="btn btn-primary form-control" ng-click="generateIncomeForm()">Income Form</button>
+        </form>
+    </div>
+    </div>
+
+    <div class="container  well well-sm" ng-hide="hideTable">
+        <div class="row" >
+            <div class="col-md-6">
+                <form>
+                    <div class="form-group">
+                        <label for="year">Year</label>
+                        <div class="form-control" id="year">
+                            {{Income.year}}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="month">Month</label>
+                        <select class="form-control" id="month" ng-model="Income.month" ng-options="m for m in months" ng-change="monitorMonth()">
+                            <option value="">(blank)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="week">Week</label>
+                        <select class="form-control" id="week" ng-model="Income.week" ng-options="w for w in weeks" ng-change="monitorChange()">
+                            <option value="">(blank)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="week">Income Type</label>
+                        <select class="form-control" id="type" ng-model="Income.type" ng-options="t for t in types" ng-change="monitorChange()">
+                            <option value="">(blank)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="date">Date</label>
+                        <input class="form-control" id="date" class="form-control" ng-model="Income.date" jqdatepicker>
+                    </div>
+                    <div class="form-group">
+                        <label for="Amount">Amount Spent</label>
+                        <input class="form-control" id="Amount" class="form-control" ng-model="Income.Amount">
+                    </div>
+                    <div class="form-group" ">
+                    <label for=" incomeComment ">
+                        Comment</label>
+                        <textarea class="form-control " id="incomeComment " class="form-control " ng-model="Income.incomeComment "></textarea>
+                    </div>
+                    <div class="form-group ">
+                        <button class="btn btn-primary " ng-click="addIncomes() ">Add Incomes</button>
+                        <button class="btn btn-info " ng-click="update() ">Update</button>
+                        <button class="btn btn-info " ng-click="deselect() ">Clear</button>
+                    </div>
+                </form>
+            </div>
+
+            <div ng-include="'./templates/chart.html'">
+            </div>
+        </div>
+        
+        <div class="container" ng-hide="hideTable">
+            <h3 >Total Income:{{monthlyIncome}}</h3>
+            </div>
+
+        <div class="container col-md-12 ">
+            <ul ng-repeat="Income in Incomes " class="list-group ">
+                <li class="list-group-item col-md-12 ">
+                    <p>
+                        <div class="container ">
+                            <span class="col-md-1">
+                                {{Income.year}}
+                            </span>
+                            <span class="col-md-1">
+                                {{Income.month}}
+                            </span>
+                            <span class="col-md-1 ">
+                                {{Income.week}}
+                            </span>
+                            <span class="col-md-2 ">
+                                {{Income.type}}
+                            </span>
+                            <span class="col-md-2 ">
+                                {{Income.Amount}}
+                            </span>
+                            <span class="col-md-2 ">
+                                {{Income.expenseComment}}
+                            </span>
+                        </div>
+                        
+                        <hr />
+                        <div class="container ">
+                            <span class="col-md-offset-9 ">
+                                <button class="btn btn-danger " ng-click="remove(Income._id) ">Remove</button>
+                                <button class="btn btn-warning " ng-click="edit(Income._id) ">Edit</button>
+                            </span>
+                        </div>
+                    </p>
+                </li>
+            </ul>
+            
+        </div>
+
+
+    </div>
