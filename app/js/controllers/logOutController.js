@@ -4,7 +4,11 @@ var j = jQuery.noConflict();
 
 var app = angular.module("fintrackerApp");
 
-app.controller('logOutController', function ($scope, $http, $cookies, $location,$rootScope, messages) {
+app.controller('logOutController',logOutController);
+
+logOutController.$inject=['$scope', '$http', '$cookies', '$location','$rootScope', 'messages'];
+
+function logOutController($scope, $http, $cookies, $location,$rootScope, messages) {
 	console.log("successfully inside logout controller");
 	
 	$http.post('/logout') .success(function(doc){
@@ -26,4 +30,4 @@ app.controller('logOutController', function ($scope, $http, $cookies, $location,
 				}
       $location.url('/logout');
     });
-});
+};

@@ -3,7 +3,12 @@
 
 var app = angular.module("fintrackerApp");
 
-app.controller('expenditureCategoryController',function($scope,$http,messages){
+app.controller('expenditureCategoryController',expenditureCategoryController)
+
+expenditureCategoryController.$inject=['$scope','$http','messages']
+
+
+function expenditureCategoryController($scope,$http,messages){
 	
 	$scope.message;
 	
@@ -39,5 +44,5 @@ app.controller('expenditureCategoryController',function($scope,$http,messages){
 		
 	}
 
-});
+};
 

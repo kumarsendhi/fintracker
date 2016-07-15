@@ -3,7 +3,11 @@
 
 var app = angular.module("fintrackerApp");
 
-app.controller('monthConfigController',function($scope,$http,messages){
+app.controller('monthConfigController',monthConfigController);
+
+monthConfigController.$inject=['$scope','$http','messages'];
+
+function monthConfigController($scope,$http,messages){
 	
 	$scope.message;
 	
@@ -38,5 +42,5 @@ app.controller('monthConfigController',function($scope,$http,messages){
 		refresh();
 	}
 
-});
+};
 

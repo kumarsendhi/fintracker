@@ -4,8 +4,8 @@
 
 var app = angular.module("fintrackerApp", ['ngRoute', 'ngCookies']);
 
-app.config(function ($routeProvider, $locationProvider, $httpProvider) {
-  var checkLoggedin = function ($q, $timeout, $http, $location, $rootScope) {
+app.config(['$routeProvider', '$locationProvider', '$httpProvider',function ($routeProvider, $locationProvider, $httpProvider) {
+  var checkLoggedin = ['$q', '$timeout', '$http', '$location', '$rootScope',function ($q, $timeout, $http, $location, $rootScope) {
     var deferred = $q.defer();
 
     $http.get('/loggedin').success(function (user) {
@@ -21,9 +21,9 @@ app.config(function ($routeProvider, $locationProvider, $httpProvider) {
     })
 
     return deferred.promise;
-  }
+  }]
 
-  $httpProvider.interceptors.push(function ($q, $location,$rootScope) {
+  $httpProvider.interceptors.push(['$q', '$location','$rootScope',function ($q, $location,$rootScope) {
     return {
       response: function (response) {
         // do something on success
@@ -37,7 +37,7 @@ app.config(function ($routeProvider, $locationProvider, $httpProvider) {
         return $q.reject(response);
       }
     };
-  });
+  }]);
 
   $routeProvider
     .when('/ExpenseDetails', {
@@ -97,7 +97,7 @@ app.config(function ($routeProvider, $locationProvider, $httpProvider) {
     .otherwise({
       redirectTo: '/ExpenseDetails'
     });
-});
+}]);
 
 
 

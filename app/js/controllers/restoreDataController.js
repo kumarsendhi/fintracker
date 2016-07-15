@@ -4,7 +4,11 @@ var j = jQuery.noConflict();
 
 var app = angular.module("fintrackerApp");
 
-app.controller('RestoreDataController', function ($scope, $http, $cookies, messages) {
+app.controller('RestoreDataController',RestoreDataController);
+
+RestoreDataController.$inject=['$scope', '$http', '$cookies', 'messages'];
+
+function RestoreDataController($scope, $http, $cookies, messages) {
 	console.log("Inside Restore Data Controller");
 
 	$scope.clickRestore = function () {
@@ -36,4 +40,4 @@ app.controller('RestoreDataController', function ($scope, $http, $cookies, messa
 		reader.readAsText(file);
 
 	}
-})
+}

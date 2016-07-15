@@ -3,7 +3,11 @@
 
 var app = angular.module("fintrackerApp");
 
-app.controller('paymentModeController',function($scope,$http,messages){
+app.controller('paymentModeController',paymentModeController);
+
+paymentModeController.$inject=['$scope','$http','messages'];
+
+function paymentModeController($scope,$http,messages){
 	
 	$scope.message;
 	
@@ -39,5 +43,5 @@ app.controller('paymentModeController',function($scope,$http,messages){
 		
 	}
 
-});
+};
 

@@ -4,7 +4,11 @@ var j = jQuery.noConflict();
 
 var app = angular.module("fintrackerApp");
 
-app.controller('signinController', function ($scope, $http, $cookies, $location, $rootScope, messages) {
+app.controller('signinController',signinController);
+
+signinController.$inject =['$scope', '$http', '$cookies', '$location', '$rootScope', 'messages'];
+
+function signinController($scope, $http, $cookies, $location, $rootScope, messages) {
 	console.log("Inside SignIn Data Controller");
 
 	$scope.user = {
@@ -32,4 +36,4 @@ app.controller('signinController', function ($scope, $http, $cookies, $location,
 
 			});
 	}
-})
+}

@@ -5,7 +5,11 @@ var j = jQuery.noConflict();
 
 var app = angular.module("fintrackerApp");
 
-app.controller('incomeController', function ($scope, $http, $cookies,$rootScope, messages,chart) {
+app.controller('incomeController',incomeController);
+
+incomeController.$inject=['$scope', '$http', '$cookies','$rootScope', 'messages','chart'];
+
+function incomeController($scope, $http, $cookies,$rootScope, messages,chart) {
 	console.log("successfully inside income controller");
 
 	$scope.months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
@@ -244,9 +248,10 @@ app.controller('incomeController', function ($scope, $http, $cookies,$rootScope,
 
 	$scope.deselect = function () {
 		$scope.Detail = "";
+        $scope.hideTable = true;
 	};
 
-});
+};
 
 
 app.directive('jqdatepicker', function () {
