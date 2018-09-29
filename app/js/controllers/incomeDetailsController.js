@@ -13,7 +13,7 @@ function incomeDetailsController($scope, $http, $cookies,$rootScope, messages,ch
 
 	$scope.months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 	$scope.weeks = ['week 1', 'week 2', 'week 3', 'week 4', 'week 5'];
-    $scope.types=['Salary','Rent','Cash Withdraw'];
+    $scope.types=['Salary','Rent','Cash Deposit','Home Loan'];
 	$scope.hideTable = true;
 
 
